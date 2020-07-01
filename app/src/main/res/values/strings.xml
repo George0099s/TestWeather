@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Test</string>
+    <string name="pictures">Картинки</string>
+    <string name="weather">Авторизация</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="enter">Войти</string>
+    <string name="weather_string">Город: %s, температура: %s, облачность: %s, влажность: %s</string>
+    <string name="wrong_login">не правильный логин</string>
+    <string name="wrong_password">не правильный пароль</string>
+</resources>
