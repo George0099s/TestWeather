@@ -24,12 +24,9 @@ class PictureNetworkManager {
 
     @SuppressLint("CheckResult")
     fun getPics(page: Int, limit: Int, callback: CallbackPics) {
-        val service: API =
-            Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(Constants.PICTURE_BASE_URL)
-                .build().create(API::class.java)
+        val service: API = API.createPicture()
+
+
 
         service.getPics(page, limit)
             .subscribeOn(Schedulers.io())

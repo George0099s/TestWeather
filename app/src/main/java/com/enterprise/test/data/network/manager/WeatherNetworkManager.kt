@@ -30,13 +30,7 @@ class WeatherNetworkManager {
             }
             .build()
 
-        val service: API =
-            Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(Constants.WEATHER_BASE_URL)
-                .client(okClient)
-                .build().create(API::class.java)
+        val service: API = API.createWeather()
 
         service.getWeather(id, language)
             .subscribeOn(Schedulers.io())
