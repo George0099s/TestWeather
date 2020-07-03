@@ -8,8 +8,6 @@ import android.widget.Toast
 
 class NetworkState {
         var connectivityManager: ConnectivityManager? = null
-        var wifiInfo: NetworkInfo? = null
-        var mobileInfo: NetworkInfo? = null
         var connected = false
         val isOnline: Boolean
             get() {

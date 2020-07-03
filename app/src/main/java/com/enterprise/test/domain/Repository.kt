@@ -1,12 +1,11 @@
 package com.enterprise.test.domain
 
 import com.enterprise.test.data.App
-import com.enterprise.test.data.network.callback.CallbackPics
-import com.enterprise.test.data.network.callback.CallbackWeather
 import com.enterprise.test.data.network.manager.PictureNetworkManager
 import com.enterprise.test.data.network.manager.WeatherNetworkManager
-import com.enterprise.test.di.Component
-import com.enterprise.test.di.DaggerComponent
+import com.enterprise.test.data.network.pojo.Picture
+import com.enterprise.test.data.network.pojo.Weather.Weather
+import io.reactivex.Observable
 import javax.inject.Inject
 
 class Repository {
@@ -17,11 +16,11 @@ class Repository {
         App.instance.component.inject(this)
     }
 
-    fun getPics(page: Int, limit: Int, callback: CallbackPics){
-        networkManager.getPics(page, limit, callback)
+    fun getPics(page: Int, limit: Int) : io.reactivex.Observable<Picture> {
+        return networkManager.getPics(page, limit)
     }
 
-    fun getWeather(callback: CallbackWeather, id: Int, lang: String){
-        weatherNetworkManager.getWeather(callback, id, lang)
+    fun getWeather( id: Int, lang: String) : Observable<Weather>{
+        return weatherNetworkManager.getWeather( id, lang)
     }
 }

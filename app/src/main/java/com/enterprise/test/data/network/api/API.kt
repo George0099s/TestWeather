@@ -6,6 +6,9 @@ import com.enterprise.test.data.network.pojo.Weather.Weather
 import com.enterprise.test.presentation.utils.Constants
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Observable
+import okhttp3.HttpUrl
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -36,9 +39,23 @@ interface API {
         }
 
         fun createWeather(): API {
+            val client = OkHttpClient.Builder()
+                .addInterceptor { chain ->
+
+                    var request: Request = chain.request()
+                    val url: HttpUrl =
+                        request.url().newBuilder()
+                            .addQueryParameter(Constants.WEATHER_APPID_NAME, Constants.WEATHER_APPID)
+                            .build()
+                    request = request.newBuilder().url(url).build()
+                    chain.proceed(request)
+                }
+                .build()
+
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
                 .baseUrl(Constants.WEATHER_BASE_URL)
                 .build()
 
