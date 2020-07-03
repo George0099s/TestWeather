@@ -12,7 +12,7 @@ interface API {
     fun getPics(@Query("page") page: Int, @Query("limit") limit: Int): Observable<Picture>
 
 
-    @GET("https://api.openweathermap.org/data/2.5/weather?units=metric")
+    @GET("?units=metric")
     fun getWeather(
         @Query("id") id: Int,
         @Query("lang") lang: String

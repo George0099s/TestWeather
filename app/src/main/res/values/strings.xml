@@ -8,4 +8,5 @@
     <string name="weather_string">Город: %s, температура: %s, облачность: %s, влажность: %s</string>
     <string name="wrong_login">не правильный логин</string>
     <string name="wrong_password">не правильный пароль</string>
+    <string name="network_error">No internetConnection</string>
 </resources>

@@ -1,26 +1,17 @@
 package com.enterprise.test.presentation.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.enterprise.test.R
-import com.enterprise.test.data.network.api.API
-import com.enterprise.test.data.network.pojo.Picture
+import com.enterprise.test.data.network.NetworkState
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val pictureFragment by lazy{
         PictureFragment()
@@ -33,32 +24,38 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportFragmentManager.beginTransaction().add(R.id.main_container, pictureFragment).commit()
-        supportFragmentManager.beginTransaction().add(R.id.main_container, weatherFragment)
-            .hide(weatherFragment).commit()
-        bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        if(!NetworkState.getInstance(this).isOnline)
+            Toast.makeText(this, R.string.network_error, Toast.LENGTH_LONG).show()
+        addFragment(pictureFragment)
+        addFragment(weatherFragment)
+
+        bottom_navigation.setOnNavigationItemSelectedListener(this)
     }
 
-    private val mOnNavigationItemSelectedListener =
-        BottomNavigationView.OnNavigationItemSelectedListener { item: MenuItem ->
-            when (item.itemId) {
-                R.id.menu_pics -> {
-                    if (active != pictureFragment) {
-                        supportFragmentManager.beginTransaction().hide(active).show(pictureFragment)
-                            .commit()
-                        active = pictureFragment
-                    }
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.menu_weather -> {
-                    if (active != weatherFragment) {
-                        supportFragmentManager.beginTransaction().hide(active).show(weatherFragment)
-                            .commit()
-                        active = weatherFragment
-                    }
-                    return@OnNavigationItemSelectedListener true
-                }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_pics -> {
+                hideShowFragment(pictureFragment)
+                return true
             }
-            false
+            R.id.menu_weather -> {
+                hideShowFragment(weatherFragment)
+                return true
+            }
         }
+        return false
+    }
+
+    private fun addFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().add(R.id.main_container, fragment).hide(fragment).show(active).commit()
+    }
+
+    private fun hideShowFragment(fragment: Fragment) {
+        if (active != fragment) {
+            supportFragmentManager.beginTransaction().hide(active).show(fragment)
+                .commit()
+            active = fragment
+        }
+    }
+
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_picture"
-    app:cardCornerRadius="4dp"
+    app:cardCornerRadius="@dimen/four_dp"
     android:background="@color/white"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -15,10 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/pict"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/hundred_dp"
             android:background="@color/colorPrimary"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_foreground"/>

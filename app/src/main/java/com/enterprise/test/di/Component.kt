@@ -1,6 +1,7 @@
 package com.enterprise.test.di
 
 import com.enterprise.test.domain.Repository
+import com.enterprise.test.presentation.adapter.PicAdapter
 import com.enterprise.test.presentation.viewmodel.PictureViewModel
 import com.enterprise.test.presentation.viewmodel.WeatherViewModel
 import dagger.Component

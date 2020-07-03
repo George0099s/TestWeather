@@ -1,6 +1,7 @@
 package com.enterprise.test.di
 
-import com.enterprise.test.data.network.manager.NetworkManager
+import com.enterprise.test.data.network.manager.PictureNetworkManager
+import com.enterprise.test.data.network.manager.WeatherNetworkManager
 import com.enterprise.test.domain.Repository
 import dagger.Module
 import dagger.Provides
@@ -16,6 +17,11 @@ class Module {
 
     @Singleton
     @get:Provides
-        val networkManager: NetworkManager
-            get() = NetworkManager()
+        val networkManager: PictureNetworkManager
+            get() = PictureNetworkManager()
+   @Singleton
+    @get:Provides
+        val weatherNetworkManager: WeatherNetworkManager
+            get() = WeatherNetworkManager()
+
 }

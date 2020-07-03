@@ -11,15 +11,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.enterprise.test.R
+import com.enterprise.test.data.App
 import com.enterprise.test.data.network.pojo.Picture
 import com.enterprise.test.data.network.pojo.PictureItem
+import javax.inject.Inject
 
 
 class PicAdapter(val pics: MutableList<PictureItem?>, val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_ITEM = 1
     private val VIEW_TYPE_LOADING = 2
-
+    private val glide = Glide.with(context)
     var list: MutableList<PictureItem?>? = arrayListOf()
 
     init{
@@ -48,7 +51,7 @@ class PicAdapter(val pics: MutableList<PictureItem?>, val context: Context) : Re
         val item = list!![position]
         if (holder.itemViewType == VIEW_TYPE_ITEM) {
             val holder = holder as PictureViewHolder
-            Glide.with(context).load(item!!.downloadUrl).into(holder.img)
+            glide.load(item!!.downloadUrl).into(holder.img)
             holder.author.text = item.author
         } else {
             val holder = holder as ProgressViewHolder
