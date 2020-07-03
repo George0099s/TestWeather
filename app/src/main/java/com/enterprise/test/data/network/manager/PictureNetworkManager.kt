@@ -10,7 +10,6 @@ class PictureNetworkManager {
 
     @SuppressLint("CheckResult")
     fun getPics(page: Int, limit: Int): Observable<Picture> {
-       return API.createPicture().
-        getPics(page, limit)
+       return API.createPicture().getPics(page, limit)
     }
 }

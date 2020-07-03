@@ -16,7 +16,7 @@ class Repository {
         App.instance.component.inject(this)
     }
 
-    fun getPics(page: Int, limit: Int) : io.reactivex.Observable<Picture> {
+    fun getPics(page: Int, limit: Int) : Observable<Picture> {
         return networkManager.getPics(page, limit)
     }
 
